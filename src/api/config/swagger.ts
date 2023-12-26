@@ -7,14 +7,15 @@ export type SwaggerDocs = Record<MethodsHttp, LocalHook>;
 
 const normalizeMethod = (
   impl: LocalHook,
-  { tagsDefault }: { tagsDefault: string[] }
-) => ({
+  { tagsDefault }: { tagsDefault: string[] | null }
+): LocalHook => ({
   ...impl,
+
   detail: {
     ...impl.detail,
     tags: normalizeTags({
       tags: impl.detail?.tags ?? [],
-      tagsDefault,
+      tagsDefault: tagsDefault ?? [],
     }),
   },
 });
@@ -25,14 +26,18 @@ const normalizeTags = ({
 }: {
   tags: string[];
   tagsDefault: string[];
-}) => [...tags, ...tagsDefault].filter((item) => !item);
+}) => [...tags, ...tagsDefault].filter((item) => item);
 
 export const createSwaggerDocs = (docsImpl: SwaggerDocs): SwaggerDocs => {
   return {
-    delete: normalizeMethod(docsImpl["delete"], { tagsDefault: ["delete"] }),
-    get: normalizeMethod(docsImpl["get"], { tagsDefault: ["get"] }),
-    post: normalizeMethod(docsImpl["post"], { tagsDefault: ["post"] }),
-    put: normalizeMethod(docsImpl["put"], { tagsDefault: ["put"] }),
+    delete: normalizeMethod(docsImpl["delete"], {
+      tagsDefault: null,
+    }),
+    get: normalizeMethod(docsImpl["get"], { tagsDefault: null }),
+    post: normalizeMethod(docsImpl["post"], {
+      tagsDefault: null,
+    }),
+    put: normalizeMethod(docsImpl["put"], { tagsDefault: null }),
   };
 };
 

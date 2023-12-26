@@ -19,8 +19,6 @@ const swaggerRecipeDocs = createSwaggerDocs({
   },
 });
 
-console.log(JSON.stringify(swaggerRecipeDocs, null, 2));
-
 export default (app: Elysia) =>
   app.group("/recipe", (api) =>
     api

@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import { setupRoutes, setupSwagger } from "./main/config";
+import { setupRoutes, setupSwagger } from "./config";
 
 export const runApp = (): Elysia => {
   const app = new Elysia();
