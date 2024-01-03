@@ -1,7 +1,7 @@
 import { test, expect, describe } from "bun:test";
 
 import { CreateIngredient } from "../CreateIngredient";
-import { Ingredient, UnitMeasure } from "@core/entity/index";
+import { UnitMeasure } from "@core/entity/index";
 import { IngredientsRepositorySpy } from "./mocks/IngredientsRepositorySpy";
 import { DeleteIngredient } from "../DeleteIngredient";
 

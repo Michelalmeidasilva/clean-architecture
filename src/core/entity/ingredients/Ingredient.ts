@@ -2,6 +2,10 @@ export enum UnitMeasure {
   LT = "lt",
 }
 
+export type SearchIngredientsParams = {
+  orderBy: "asc" | "desc";
+};
+
 export type Ingredient = {
   title: string;
   unit: UnitMeasure;

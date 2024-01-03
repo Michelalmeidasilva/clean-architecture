@@ -1,9 +1,9 @@
-import { test, describe } from "bun:test";
+import { test, describe, expect } from "bun:test";
 
 import { CreateIngredient } from "../CreateIngredient";
 import { UnitMeasure } from "@core/entity/index";
 import { IngredientsRepositorySpy } from "./mocks/IngredientsRepositorySpy";
-import { DeleteIngredient } from "../DeleteIngredient";
+import { SearchIngredient } from "../SearchIngredients";
 
 const makeSut = () => {
   const repository = new IngredientsRepositorySpy();
@@ -41,13 +41,60 @@ const makeSut = () => {
 
   return {
     repository,
+    listLenght: repository.ingredients.length,
   };
 };
 
-describe("DeleteIngredient", () => {
-  test("Should search a ingredient by title", () => {
-    const { repository } = makeSut();
+describe("Search Ingredients", () => {
+  test("Should get all ingredients by asc", () => {
+    const { repository, listLenght } = makeSut();
 
-    const sut = new DeleteIngredient(repository);
+    const sut = new SearchIngredient(repository);
+
+    const ingredients = sut.invoke({ orderBy: "asc" });
+
+    // expect(ingredients[0]).toBeArrayOfSize(listLenght);
+
+    //how to validate if all elements is the asc
+
+    expect(ingredients?.[0].title).toBe("T");
   });
+
+  test("Should get all ingredients by desc", () => {
+    const { repository, listLenght } = makeSut();
+
+    const sut = new SearchIngredient(repository);
+
+    const ingredients = sut.invoke({ orderBy: "asc" });
+
+    // expect(ingredients[0]).toBeArrayOfSize(listLenght);
+
+    //how to validate if all elements is the asc
+
+    expect(ingredients[0].title).toBe("Teste");
+  });
+
+  // test("Should get ingredients by name in asc order", () => {
+  //   const { repository, listLenght } = makeSut();
+
+  //   const sut = new SearchIngredient(repository);
+
+  //   const ingredients = sut.invoke({ orderBy: "desc" });
+
+  //   //how to validate if all elements is the asc
+
+  //   // expect(ingredients).toBeArrayOfSize(listLenght);
+  // });
+
+  // test("Should get ingredients by name in desc order", () => {
+  //   const { repository, listLenght } = makeSut();
+
+  //   const sut = new SearchIngredient(repository);
+
+  //   const ingredients = sut.invoke({ orderBy: "desc" });
+
+  //   //how to validate if all elements is the asc
+
+  //   // expect(ingredients).toBeArrayOfSize(listLenght);
+  // });
 });

@@ -1,4 +1,8 @@
-import { Ingredient, IngredientsPartial } from "@core/entity";
+import {
+  Ingredient,
+  IngredientsPartial,
+  SearchIngredientsParams,
+} from "@core/entity";
 import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
 
 export class IngredientsRepositorySpy implements IngredientsRepository {
@@ -22,8 +26,8 @@ export class IngredientsRepositorySpy implements IngredientsRepository {
     return ingredient;
   }
 
-  getIngredients(params: { orderBy: "asc" | "dsc" }) {
-    return [];
+  getIngredients(params: SearchIngredientsParams) {
+    return this.ingredients;
   }
 
   updateIngredient(ingredient: IngredientsPartial, id: string) {
