@@ -5,7 +5,7 @@ export enum UnitMeasure {
 export type Ingredient = {
   title: string;
   unit: UnitMeasure;
-  id: string;
+  readonly id: string;
 };
 
 export type IngredientsPartial = Omit<

@@ -16,7 +16,7 @@ const makeSut = () => {
 };
 
 describe("CreateIngredient", () => {
-  test("Should Create a new ingredient", () => {
+  test("Should create a new ingredient", () => {
     const { sut, repository } = makeSut();
 
     const createdElement = sut.invoke({
