@@ -1,9 +1,0 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`CreateIngredient Should Create a new ingredient 1`] = `
-{
-  "id": "hash_3424234",
-  "title": "Feijão",
-  "unit": "lt",
-}
-`;

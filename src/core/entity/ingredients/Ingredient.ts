@@ -1,5 +1,5 @@
 export enum UnitMeasure {
-  LT = 'lt',
+  LT = "lt",
 }
 
 export type Ingredient = {
@@ -7,3 +7,8 @@ export type Ingredient = {
   unit: UnitMeasure;
   id: string;
 };
+
+export type IngredientsPartial = Omit<
+  { [T in keyof Ingredient]?: Ingredient[T] },
+  "id"
+>;

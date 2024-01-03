@@ -1,8 +1,11 @@
-import { Ingredient } from '../../entity/ingredients/Ingredient';
+import {
+  Ingredient,
+  IngredientsPartial,
+} from "../../entity/ingredients/Ingredient";
 
 export interface IngredientsRepository {
-  addNote: (note: Ingredient) => void;
-  updateNote: (note: Ingredient) => boolean;
-  deleteNote: (note: Ingredient) => boolean;
-  getNotes: () => Ingredient[];
+  addIngredient: (ingredient: Ingredient) => Ingredient;
+  updateIngredient: (attributes: IngredientsPartial, id: string) => Ingredient;
+  deleteIngredient: (ingredient: Ingredient) => Ingredient;
+  getIngredients: (params: { orderBy: "asc" | "dsc" }) => Ingredient[];
 }
