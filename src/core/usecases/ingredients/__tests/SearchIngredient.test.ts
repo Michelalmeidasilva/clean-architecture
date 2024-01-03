@@ -11,8 +11,23 @@ const makeSut = () => {
   const sutCreateIngredient = new CreateIngredient(repository);
 
   sutCreateIngredient.invoke({
-    id: "3232",
-    title: "Teste",
+    id: "30",
+    title: "a",
+    unit: UnitMeasure.LT,
+  });
+  sutCreateIngredient.invoke({
+    id: "2",
+    title: "b",
+    unit: UnitMeasure.LT,
+  });
+  sutCreateIngredient.invoke({
+    id: "33",
+    title: "@",
+    unit: UnitMeasure.LT,
+  });
+  sutCreateIngredient.invoke({
+    id: "323",
+    title: "0",
     unit: UnitMeasure.LT,
   });
 
@@ -22,14 +37,19 @@ const makeSut = () => {
     unit: UnitMeasure.LT,
   });
   sutCreateIngredient.invoke({
-    id: "3234",
-    title: "Tes",
+    id: "3232",
+    title: "Teste",
     unit: UnitMeasure.LT,
   });
 
   sutCreateIngredient.invoke({
     id: "3235",
     title: "Te",
+    unit: UnitMeasure.LT,
+  });
+  sutCreateIngredient.invoke({
+    id: "3234",
+    title: "Tes",
     unit: UnitMeasure.LT,
   });
 
@@ -46,32 +66,60 @@ const makeSut = () => {
 };
 
 describe("Search Ingredients", () => {
-  // test.skip("Should get all ingredients by asc", () => {
-  //   const { repository, listLenght } = makeSut();
-
-  //   const sut = new SearchIngredient(repository);
-
-  //   const ingredients = sut.invoke({ orderBy: "asc" });
-
-  //   // expect(ingredients[0]).toBeArrayOfSize(listLenght);
-
-  //   //how to validate if all elements is the asc
-
-  //   expect(ingredients?.[0]?.title).toBe("T");
-  // });
-
-  test("Should get all ingredients by desc", () => {
+  test("Should get all ingredients without filter", () => {
     const { repository, listLenght } = makeSut();
+
+    const sut = new SearchIngredient(repository);
+
+    const ingredients = sut.invoke({});
+
+    expect(ingredients.length).toBe(listLenght);
+  });
+
+  test("Should get all ingredients by asc", () => {
+    const { repository } = makeSut();
 
     const sut = new SearchIngredient(repository);
 
     const ingredients = sut.invoke({ orderBy: "asc" });
 
-    expect(ingredients).toBeArrayOfSize(listLenght);
+    const ascTitles: (string | undefined | null)[] = [
+      "@",
+      "0",
+      "a",
+      "b",
+      "T",
+      "Te",
+      "Tes",
+      "Test",
+      "Teste",
+    ];
 
-    //how to validate if all elements is the asc
+    expect(ingredients.length === ascTitles.length);
 
-    expect(ingredients?.[0]?.title).toBe("Teste");
+    ingredients.forEach((ingredient, index) => {
+      const expectedValue = ascTitles[index];
+      const value = ingredient?.title;
+      expect(value).toBe(expectedValue!);
+    });
+  });
+
+  test("Should get all ingredients by desc", () => {
+    const { repository } = makeSut();
+
+    const sut = new SearchIngredient(repository);
+
+    const ingredients = sut.invoke({ orderBy: "desc" });
+
+    const descTitles = ["Teste", "Test", "Tes", "Te", "T", "b", "a", "0", "@"];
+
+    expect(ingredients.length === descTitles.length);
+
+    ingredients.forEach((ingredient, index) => {
+      const expectedValue = descTitles[index];
+      const value = ingredient?.title;
+      expect(value).toBe(expectedValue!);
+    });
   });
 
   // test("Should get ingredients by name in asc order", () => {

@@ -3,7 +3,7 @@ export enum UnitMeasure {
 }
 
 export type SearchIngredientsParams = {
-  orderBy: "asc" | "desc";
+  orderBy?: "asc" | "desc" | "none";
 };
 
 export type Ingredient = {

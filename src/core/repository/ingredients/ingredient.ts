@@ -11,5 +11,5 @@ export interface IngredientsRepository {
     id: string
   ) => Ingredient | undefined;
   deleteIngredient: (ingredient: Ingredient) => Ingredient;
-  getIngredients: (params: SearchIngredientsParams) => Ingredient[];
+  getIngredients: (params?: SearchIngredientsParams) => Ingredient[];
 }

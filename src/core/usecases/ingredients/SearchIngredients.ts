@@ -1,18 +1,20 @@
-import { SearchIngredientsParams } from "@core/entity";
+import { Ingredient, SearchIngredientsParams } from "@core/entity";
 import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
 
 export class SearchIngredient {
   constructor(private ingredientRepository: IngredientsRepository) {}
 
-  invoke({ orderBy }: SearchIngredientsParams) {
+  invoke({ orderBy = "none" }: SearchIngredientsParams): Ingredient[] {
+    const ingredients = this.ingredientRepository.getIngredients();
+
     if (orderBy === "asc") {
-      return this.ingredientRepository.getIngredients({ orderBy });
+      return ingredients.sort((a, b) => a.title.localeCompare(b.title));
     }
 
     if (orderBy === "desc") {
-      return this.ingredientRepository.getIngredients({ orderBy });
+      return ingredients.sort((a, b) => b.title.localeCompare(a.title));
     }
 
-    return;
+    return ingredients;
   }
 }
