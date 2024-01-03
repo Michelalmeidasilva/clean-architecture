@@ -10,7 +10,7 @@ export class UpdateIngredient {
   invoke(
     attributes: Omit<IngredientsPartial, "id">,
     id: string
-  ): Ingredient | null {
+  ): Ingredient | undefined {
     const updatedIngredient = this.ingredientRepository.updateIngredient(
       attributes,
       id

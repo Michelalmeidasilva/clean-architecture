@@ -27,19 +27,23 @@ export class IngredientsRepositorySpy implements IngredientsRepository {
   }
 
   getIngredients(params: SearchIngredientsParams) {
+    console.log(params);
     return this.ingredients;
   }
 
-  updateIngredient(ingredient: IngredientsPartial, id: string) {
+  updateIngredient(
+    attributes: IngredientsPartial,
+    id: string
+  ): Ingredient | undefined {
     const itemIndex = this.ingredients.findIndex((item) => item.id === id);
 
     const updatedElement = {
       ...this.ingredients[itemIndex],
-      ...ingredient,
+      ...attributes,
     };
 
-    this.ingredients[itemIndex] = updatedElement;
+    this.ingredients[itemIndex] = updatedElement as Ingredient;
 
-    return updatedElement;
+    return this.ingredients[itemIndex];
   }
 }

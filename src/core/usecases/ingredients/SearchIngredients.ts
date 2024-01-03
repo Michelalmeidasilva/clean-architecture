@@ -12,5 +12,7 @@ export class SearchIngredient {
     if (orderBy === "desc") {
       return this.ingredientRepository.getIngredients({ orderBy });
     }
+
+    return;
   }
 }
