@@ -31,7 +31,7 @@ describe("UpdateIngredient", () => {
       {
         title: "New Title",
       },
-      ingredientCreated?.id!
+      ingredientCreated?.id
     );
 
     const ingredientAtRepository = repository.ingredients.find(
