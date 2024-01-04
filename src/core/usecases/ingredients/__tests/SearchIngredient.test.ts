@@ -121,28 +121,4 @@ describe("Search Ingredients", () => {
       expect(value).toBe(expectedValue!);
     });
   });
-
-  // test("Should get ingredients by name in asc order", () => {
-  //   const { repository, listLenght } = makeSut();
-
-  //   const sut = new SearchIngredient(repository);
-
-  //   const ingredients = sut.invoke({ orderBy: "desc" });
-
-  //   //how to validate if all elements is the asc
-
-  //   // expect(ingredients).toBeArrayOfSize(listLenght);
-  // });
-
-  // test("Should get ingredients by name in desc order", () => {
-  //   const { repository, listLenght } = makeSut();
-
-  //   const sut = new SearchIngredient(repository);
-
-  //   const ingredients = sut.invoke({ orderBy: "desc" });
-
-  //   //how to validate if all elements is the asc
-
-  //   // expect(ingredients).toBeArrayOfSize(listLenght);
-  // });
 });
