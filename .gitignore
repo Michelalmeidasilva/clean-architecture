@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+# envs
+/docker/.env
+.env
+
 # next.js
 /.next/
 /out/

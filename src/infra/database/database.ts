@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 
 export const Database = () => {
   // Replace the placeholder with your Atlas connection string
-  const uri = "<connection string>";
+  const uri = "";
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
   const client = new MongoClient(uri);
   
