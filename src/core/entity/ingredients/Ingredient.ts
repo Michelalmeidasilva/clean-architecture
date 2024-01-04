@@ -12,7 +12,4 @@ export type Ingredient = {
   readonly id: string;
 };
 
-export type IngredientsPartial = Omit<
-  { [T in keyof Ingredient]?: Ingredient[T] },
-  "id"
->;
+export type IngredientsPartial = Omit<Partial<Ingredient>, "id">;
