@@ -14,7 +14,7 @@ export default class IngredientsRepositoryMongoDb
 
   async addIngredient(ingredient: Ingredient): Promise<Ingredient> {
     const collection = await IngredientsRepositoryMongoDb.getCollection();
-    
+
     if (collection) {
       const test = await collection.insertOne({ ingredient });
       console.log("inserted", { test });
