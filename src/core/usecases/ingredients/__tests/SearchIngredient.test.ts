@@ -66,22 +66,22 @@ const makeSut = () => {
 };
 
 describe("Search Ingredients", () => {
-  test("Should get all ingredients without filter", () => {
+  test("Should get all ingredients without filter", async () => {
     const { repository, listLenght } = makeSut();
 
     const sut = new SearchIngredient(repository);
 
-    const ingredients = sut.invoke({});
+    const ingredients = await sut.invoke({});
 
     expect(ingredients.length).toBe(listLenght);
   });
 
-  test("Should get all ingredients by asc", () => {
+  test("Should get all ingredients by asc", async () => {
     const { repository } = makeSut();
 
     const sut = new SearchIngredient(repository);
 
-    const ingredients = sut.invoke({ orderBy: "asc" });
+    const ingredients = await sut.invoke({ orderBy: "asc" });
 
     const ascTitles: (string | undefined | null)[] = [
       "@",
@@ -104,12 +104,12 @@ describe("Search Ingredients", () => {
     });
   });
 
-  test("Should get all ingredients by desc", () => {
+  test("Should get all ingredients by desc", async () => {
     const { repository } = makeSut();
 
     const sut = new SearchIngredient(repository);
 
-    const ingredients = sut.invoke({ orderBy: "desc" });
+    const ingredients = await sut.invoke({ orderBy: "desc" });
 
     const descTitles = ["Teste", "Test", "Tes", "Te", "T", "b", "a", "0", "@"];
 

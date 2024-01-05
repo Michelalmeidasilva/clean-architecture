@@ -26,7 +26,7 @@ export class IngredientsRepositorySpy implements IngredientsRepository {
     return ingredient;
   }
 
-  getIngredients(params?: SearchIngredientsParams) {
+  async getIngredients(params?: SearchIngredientsParams) {
     console.log(params);
     return this.ingredients;
   }
