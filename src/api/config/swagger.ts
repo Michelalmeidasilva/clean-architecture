@@ -44,6 +44,7 @@ export const createSwaggerDocs = (docsImpl: SwaggerDocs): SwaggerDocs => {
 export const setupSwagger = (app: Elysia) => {
   app.use(
     swagger({
+
       documentation: {
         info: {
           title: "Galileu Documentation",

@@ -4,10 +4,12 @@ import { join } from "path";
 
 export type MethodsHttp = "get" | "post" | "put" | "delete";
 
-export const setupRoutes = (app: Elysia) => {
-  readdirSync(join(import.meta.dir, "../routes")).map(async (file) => {
-    if (!file.endsWith(".map")) {
-      (await import(`../routes/${file}`)).default(app);
+export const setupRoutes = async (app: Elysia) => {
+  const directories = readdirSync(join(import.meta.dir, "../routes"));
+
+  for await (const file of directories) {
+    if (file.endsWith("-routes.ts")) {
+      (await import(`../routes/${file}`))?.default(app);
     }
-  });
+  }
 };

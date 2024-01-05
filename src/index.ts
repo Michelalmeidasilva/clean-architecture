@@ -1,3 +1,1 @@
-import { runApp } from "./api";
-
-runApp();
+import "@main/index";

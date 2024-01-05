@@ -5,7 +5,7 @@ import {
 } from "../../entity/ingredients/Ingredient";
 
 export interface IngredientsRepository {
-  addIngredient: (ingredient: Ingredient) => Ingredient;
+  addIngredient: (ingredient: Ingredient) => Promise<Ingredient>;
   updateIngredient: (
     attributes: IngredientsPartial,
     id: string

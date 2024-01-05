@@ -1,3 +1,7 @@
+import { Collection } from "mongodb";
+
+import { MongoHelper } from "../mongo-helper";
+
 import {
   Ingredient,
   IngredientsPartial,
@@ -8,7 +12,17 @@ import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
 export default class IngredientsRepositoryMongoDb
   implements IngredientsRepository
 {
-  addIngredient(ingredient: Ingredient) {
+  static async getCollection(): Promise<Collection | null> {
+    return MongoHelper.getCollection("ingredients");
+  }
+
+  async addIngredient(ingredient: Ingredient): Promise<Ingredient> {
+    const collection = await IngredientsRepositoryMongoDb.getCollection();
+
+    if (collection) {
+      await collection.insertOne({ ingredient });
+    }
+
     return ingredient;
   }
 
@@ -19,6 +33,7 @@ export default class IngredientsRepositoryMongoDb
   deleteIngredient(ingredient: Ingredient) {
     return ingredient;
   }
+
   getIngredients(params?: SearchIngredientsParams | undefined) {
     console.log({ params });
     return [];

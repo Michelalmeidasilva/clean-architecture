@@ -18,7 +18,7 @@ const swaggerRecipeDocs = createSwaggerDocs({
   },
 });
 
-export default (app: Elysia) =>
+export default (app: Elysia) => {
   app.group("/groceries-list", (api) =>
     api
       .get("/", () => "Get Groceries list", swaggerRecipeDocs["get"])
@@ -26,3 +26,4 @@ export default (app: Elysia) =>
       .put("/", () => "Update grocery list", swaggerRecipeDocs["put"])
       .delete("/", () => "Delete grocery list", swaggerRecipeDocs["delete"])
   );
+};

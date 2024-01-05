@@ -21,8 +21,8 @@ const swaggerRecipeDocs = createSwaggerDocs({
 export default (app: Elysia) =>
   app.group("/ingredients", (api) =>
     api
-      .get("/", () => "Get Ingredients", swaggerRecipeDocs["get"])
-      .post("/", () => "Create Ingredients", swaggerRecipeDocs["post"])
-      .put("/", () => "Update Ingredients", swaggerRecipeDocs["put"])
-      .delete("/", () => "Delete Ingredients", swaggerRecipeDocs["delete"])
+      .get("/", () => console.log("get Ingredient"), swaggerRecipeDocs["get"])
+      .post("", () => "Create Ingredients", swaggerRecipeDocs["post"])
+      .put("", () => "Update Ingredients", swaggerRecipeDocs["put"])
+      .delete("", () => "Delete Ingredients", swaggerRecipeDocs["delete"])
   );
