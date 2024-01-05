@@ -2,11 +2,7 @@ import { Collection } from "mongodb";
 
 import { MongoHelper } from "../mongo-helper";
 
-import {
-  Ingredient,
-  IngredientsPartial,
-  SearchIngredientsParams,
-} from "@core/entity";
+import { Ingredient, IngredientsPartial } from "@core/entity";
 import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
 
 export default class IngredientsRepositoryMongoDb
@@ -18,9 +14,10 @@ export default class IngredientsRepositoryMongoDb
 
   async addIngredient(ingredient: Ingredient): Promise<Ingredient> {
     const collection = await IngredientsRepositoryMongoDb.getCollection();
-
+    
     if (collection) {
-      await collection.insertOne({ ingredient });
+      const test = await collection.insertOne({ ingredient });
+      console.log("inserted", { test });
     }
 
     return ingredient;
@@ -34,8 +31,12 @@ export default class IngredientsRepositoryMongoDb
     return ingredient;
   }
 
-  getIngredients(params?: SearchIngredientsParams | undefined) {
-    console.log({ params });
+  async getIngredients() {
+    const collection = await IngredientsRepositoryMongoDb.getCollection();
+
+    const ingredientsDocument = await collection?.find().toArray();
+
+    console.log(ingredientsDocument);
     return [];
   }
 }

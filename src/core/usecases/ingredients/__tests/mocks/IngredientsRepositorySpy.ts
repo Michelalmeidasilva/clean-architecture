@@ -12,7 +12,7 @@ export class IngredientsRepositorySpy implements IngredientsRepository {
     this.ingredients = [];
   }
 
-  addIngredient(ingredient: Ingredient) {
+  async addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
     return ingredient;
   }

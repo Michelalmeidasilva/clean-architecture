@@ -4,8 +4,11 @@ import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
 export class SearchIngredient {
   constructor(private ingredientRepository: IngredientsRepository) {}
 
-  invoke({ orderBy = "none" }: SearchIngredientsParams): Ingredient[] {
-    const ingredients = this.ingredientRepository.getIngredients();
+  async invoke({
+    orderBy = "none",
+  }: SearchIngredientsParams): Promise<Ingredient[]> {
+    const ingredients = await this.ingredientRepository.getIngredients();
+    console.log("ingredients", { ingredients });
 
     if (orderBy === "asc") {
       return ingredients.sort((a, b) => a.title.localeCompare(b.title));

@@ -1,13 +1,19 @@
 import { Ingredient } from "@core/entity";
 import { CreateIngredient } from "@core/usecases/ingredients/CreateIngredient";
-import { IngredientsRepositorySpy } from "@core/usecases/ingredients/__tests/mocks/IngredientsRepositorySpy";
+import { SearchIngredient } from "@core/usecases/ingredients/SearchIngredients";
+import IngredientsRepositoryMongoDb from "@infra/database/mongo/repository/IngredientsRepositoryMongoDb";
 
-export class IngredientsController {
-  constructor() {}
+export const IngredientsController = {
+  async createIngredient({ body }: { body: Ingredient }) {
+    const repository = new IngredientsRepositoryMongoDb();
+    const useCase = new CreateIngredient(repository);
+    return useCase.invoke({ ...body });
+  },
 
-  createIngredient(ingredient: Ingredient) {
-    const repository = new IngredientsRepositorySpy();
-    const createIngredient = new CreateIngredient(repository);
-    return createIngredient.invoke(ingredient);
-  }
-}
+  async getIngredients() {
+    const repository = new IngredientsRepositoryMongoDb();
+    const useCase = new SearchIngredient(repository);
+    const ingredients = useCase.invoke({ orderBy: "none" });
+    return ingredients;
+  },
+};

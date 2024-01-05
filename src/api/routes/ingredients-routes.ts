@@ -1,5 +1,7 @@
 import Elysia from "elysia";
 import { createSwaggerDocs } from "../config";
+import { IngredientsController } from "@api/controllers/IngredientsController";
+import { CreateIngredientSchemaValidator } from "@api/schemas/CreateIngredientSchema";
 
 const tags = ["Ingredient"];
 
@@ -21,8 +23,11 @@ const swaggerRecipeDocs = createSwaggerDocs({
 export default (app: Elysia) =>
   app.group("/ingredients", (api) =>
     api
-      .get("/", () => console.log("get Ingredient"), swaggerRecipeDocs["get"])
-      .post("", () => "Create Ingredients", swaggerRecipeDocs["post"])
+      .get("/", IngredientsController.getIngredients)
+      .post("/", IngredientsController.createIngredient, {
+        body: CreateIngredientSchemaValidator,
+        detail: swaggerRecipeDocs["post"].detail,
+      })
       .put("", () => "Update Ingredients", swaggerRecipeDocs["put"])
       .delete("", () => "Delete Ingredients", swaggerRecipeDocs["delete"])
   );

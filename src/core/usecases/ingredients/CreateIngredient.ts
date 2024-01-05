@@ -4,11 +4,10 @@ import { Ingredient } from "../../entity/ingredients/Ingredient";
 export class CreateIngredient {
   constructor(private ingredientRepository: IngredientsRepository) {}
 
-  invoke({ unit, title, id }: Ingredient): Ingredient {
-    const ingredient = this.ingredientRepository.addIngredient({
+  async invoke({ unit, title }: Ingredient): Promise<Ingredient> {
+    const ingredient = await this.ingredientRepository.addIngredient({
       unit,
       title,
-      id,
     });
 
     return ingredient;
