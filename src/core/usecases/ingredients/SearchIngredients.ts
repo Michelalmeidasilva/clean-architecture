@@ -5,7 +5,7 @@ export type SearchIngredientsParams = {
   orderBy?: "asc" | "desc" | "none";
 };
 
-export type SearchIngredientsResult= Promise<Ingredient[] | null>
+export type SearchIngredientsResult = Promise<Ingredient[] | null>;
 export class SearchIngredient {
   constructor(private ingredientRepository: SearchIngredientRepository) {}
 
@@ -13,12 +13,11 @@ export class SearchIngredient {
     orderBy = "none",
   }: SearchIngredientsParams): SearchIngredientsResult {
     const ingredients = await this.ingredientRepository.getIngredients();
-    console.log("ingredients", { ingredients });
 
-    if(ingredients === null){
+    if (ingredients === null) {
       return ingredients;
     }
-    
+
     if (orderBy === "asc") {
       return ingredients.sort((a, b) => a.title.localeCompare(b.title));
     }

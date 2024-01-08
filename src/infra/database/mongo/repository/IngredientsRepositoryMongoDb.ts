@@ -2,7 +2,7 @@ import { Collection } from "mongodb";
 
 import { MongoHelper } from "../mongo-helper";
 
-import { Ingredient, IngredientsPartial } from "@core/entity";
+// import { Ingredient, IngredientsPartial } from "@core/entity";
 import { IngredientsRepository } from "@core/repository/ingredients/IngredientRepository";
 
 export default class IngredientsRepositoryMongoDb
@@ -12,31 +12,30 @@ export default class IngredientsRepositoryMongoDb
     return MongoHelper.getCollection("ingredients");
   }
 
-  async addIngredient(ingredient: Ingredient): Promise<Ingredient> {
-    const collection = await IngredientsRepositoryMongoDb.getCollection();
+  // async addIngredient(ingredient: Ingredient): Promise<Ingredient> {
+  //   const collection = await IngredientsRepositoryMongoDb.getCollection();
 
-    if (collection) {
-      const test = await collection.insertOne({ ingredient });
-      console.log("inserted", { test });
-    }
+  //   if (collection) {
+  //     const test = await collection.insertOne({ ingredient });
+  //   }
 
-    return ingredient;
-  }
+  //   return ingredient;
+  // }
 
-  updateIngredient(attributes: IngredientsPartial, id: string) {
-    return { ...attributes, id } as Ingredient;
-  }
+  // updateIngredient(attributes: IngredientsPartial, id: string) {
+  //   return { ...attributes, id } as Ingredient;
+  // }
 
-  deleteIngredient(ingredient: Ingredient) {
-    return ingredient;
-  }
+  // deleteIngredient(ingredient: Ingredient) {
+  //   return ingredient;
+  // }
 
-  async getIngredients() {
-    const collection = await IngredientsRepositoryMongoDb.getCollection();
+  // async getIngredients() {
+  //   const collection = await IngredientsRepositoryMongoDb.getCollection();
 
-    const ingredientsDocument = await collection?.find().toArray();
+  //   const ingredientsDocument = await collection?.find().toArray();
 
-    console.log(ingredientsDocument);
-    return [];
-  }
+  //   console.log(ingredientsDocument);
+  //   return [];
+  // }
 }

@@ -40,7 +40,9 @@ export class IngredientsRepositorySpy implements IngredientsRepository {
   async getIngredients(
     params?: SearchIngredientsParams
   ): SearchIngredientsResult {
-    console.log(params);
+    if (params) {
+      return this.ingredients;
+    }
     return this.ingredients;
   }
 
