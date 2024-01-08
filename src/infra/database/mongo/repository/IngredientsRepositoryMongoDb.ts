@@ -3,13 +3,37 @@ import { Collection } from "mongodb";
 import { MongoHelper } from "../mongo-helper";
 
 // import { Ingredient, IngredientsPartial } from "@core/entity";
-import { IngredientsRepository } from "@core/repository/ingredients/IngredientRepository";
+import {
+  SearchIngredientsParams,
+  SearchIngredientsResult,
+} from "@core/usecases/ingredients";
+import { SearchIngredientRepository } from "@core/repository/ingredients/SearchIngredientRepository";
 
 export default class IngredientsRepositoryMongoDb
-  implements IngredientsRepository
+  implements SearchIngredientRepository
 {
   static async getCollection(): Promise<Collection | null> {
     return MongoHelper.getCollection("ingredients");
+  }
+
+  // async addIngredient(params: Ingredient): CreateIngredientsResult {}
+  // async deleteIngredient(params: DeleteIngredientParams) {}
+  // async updateIngredient(params: UpdateIngredientParams) {}
+  async getIngredients(
+    params?: SearchIngredientsParams
+  ): SearchIngredientsResult {
+    const collection = await IngredientsRepositoryMongoDb.getCollection();
+    const ingredientsDocument = await collection?.find().toArray();
+
+    console.log(ingredientsDocument);
+
+    if (params) {
+      return [];
+      // return ingredientsDocument;
+    }
+
+    return [];
+    // return ingredientsDocument;
   }
 
   // async addIngredient(ingredient: Ingredient): Promise<Ingredient> {
