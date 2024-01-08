@@ -1,9 +1,16 @@
+import { Ingredient } from "@core/entity";
+
+import { IngredientsRepository } from "@core/repository/ingredients/IngredientRepository";
+
 import {
-  Ingredient,
-  IngredientsPartial,
+  CreateIngredientsResult,
+  DeleteIngredientParams,
+  DeleteIngredientResult,
   SearchIngredientsParams,
-} from "@core/entity";
-import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
+  SearchIngredientsResult,
+  UpdateIngredientParams,
+  UpdateIngredientResult,
+} from "@core/usecases/ingredients";
 
 export class IngredientsRepositorySpy implements IngredientsRepository {
   public ingredients: Ingredient[];
@@ -12,29 +19,35 @@ export class IngredientsRepositorySpy implements IngredientsRepository {
     this.ingredients = [];
   }
 
-  async addIngredient(ingredient: Ingredient) {
-    this.ingredients.push(ingredient);
-    return ingredient;
+  async addIngredient(params: Ingredient): CreateIngredientsResult {
+    const idCreated = "323123";
+    this.ingredients?.push({ ...params, id: idCreated });
+    return true;
   }
 
-  deleteIngredient(ingredient: Ingredient) {
+  async deleteIngredient(
+    params: DeleteIngredientParams
+  ): DeleteIngredientResult {
     const filteredArray = this.ingredients.filter(
-      (item) => item.id !== ingredient.id
+      (item) => item.id !== params.id
     );
 
     this.ingredients = filteredArray;
-    return ingredient;
+
+    return true;
   }
 
-  async getIngredients(params?: SearchIngredientsParams) {
+  async getIngredients(
+    params?: SearchIngredientsParams
+  ): SearchIngredientsResult {
     console.log(params);
     return this.ingredients;
   }
 
-  updateIngredient(
-    attributes: IngredientsPartial,
-    id: string
-  ): Ingredient | undefined {
+  async updateIngredient({
+    attributes,
+    id,
+  }: UpdateIngredientParams): UpdateIngredientResult {
     const itemIndex = this.ingredients.findIndex((item) => item.id === id);
 
     const updatedElement = {
@@ -44,6 +57,6 @@ export class IngredientsRepositorySpy implements IngredientsRepository {
 
     this.ingredients[itemIndex] = updatedElement as Ingredient;
 
-    return this.ingredients[itemIndex];
+    return updatedElement as Ingredient;
   }
 }

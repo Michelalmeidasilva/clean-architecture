@@ -73,7 +73,7 @@ describe("Search Ingredients", () => {
 
     const ingredients = await sut.invoke({});
 
-    expect(ingredients.length).toBe(listLenght);
+    expect(ingredients?.length).toBe(listLenght);
   });
 
   test("Should get all ingredients by asc", async () => {
@@ -95,9 +95,9 @@ describe("Search Ingredients", () => {
       "Teste",
     ];
 
-    expect(ingredients.length === ascTitles.length);
+    expect(ingredients?.length === ascTitles.length);
 
-    ingredients.forEach((ingredient, index) => {
+    ingredients?.forEach((ingredient, index) => {
       const expectedValue = ascTitles[index];
       const value = ingredient?.title;
       expect(value).toBe(expectedValue!);
@@ -113,9 +113,9 @@ describe("Search Ingredients", () => {
 
     const descTitles = ["Teste", "Test", "Tes", "Te", "T", "b", "a", "0", "@"];
 
-    expect(ingredients.length === descTitles.length);
+    expect(ingredients?.length === descTitles.length);
 
-    ingredients.forEach((ingredient, index) => {
+    ingredients?.forEach((ingredient, index) => {
       const expectedValue = descTitles[index];
       const value = ingredient?.title;
       expect(value).toBe(expectedValue!);

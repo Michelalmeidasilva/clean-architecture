@@ -5,19 +5,20 @@ import { UnitMeasure } from "@core/entity/index";
 import { IngredientsRepositorySpy } from "./mocks/IngredientsRepositorySpy";
 import { DeleteIngredient } from "../DeleteIngredient";
 
-const makeSut = () => {
+const makeSut = async () => {
   const repository = new IngredientsRepositorySpy();
 
   const sutCreateIngredient = new CreateIngredient(repository);
   const sutDeleteIngredient = new DeleteIngredient(repository);
+  const elementIdtoBeDeleted = "323123";
 
-  sutCreateIngredient.invoke({
+  await sutCreateIngredient.invoke({
     id: "3232",
     title: "Teste",
     unit: UnitMeasure.LT,
   });
 
-  const elementToBeDeleted = sutCreateIngredient.invoke({
+  await sutCreateIngredient.invoke({
     id: "323123",
     title: "dsadsa",
     unit: UnitMeasure.LT,
@@ -25,17 +26,19 @@ const makeSut = () => {
 
   return {
     sut: sutDeleteIngredient,
-    elementToBeDeleted,
+    elementIdtoBeDeleted,
     repository,
   };
 };
 
 describe("DeleteIngredient", () => {
-  test("Should delete a ingredient already inserted", () => {
-    const { sut, elementToBeDeleted } = makeSut();
+  test("Should delete a ingredient already inserted", async () => {
+    const { sut, elementIdtoBeDeleted } = await makeSut();
 
-    const deletedElement = sut.invoke(elementToBeDeleted);
+    const isSuccess = await sut.invoke({
+      id: elementIdtoBeDeleted,
+    });
 
-    expect(deletedElement).toMatchObject(elementToBeDeleted);
+    expect(isSuccess).toBeTrue();
   });
 });

@@ -9,33 +9,35 @@ import { IngredientsRepositorySpy } from "./mocks/IngredientsRepositorySpy";
 const makeSut = () => {
   const repository = new IngredientsRepositorySpy();
 
-  const ingredientCreated = new CreateIngredient(repository).invoke({
-    id: "323123",
+  const ingredientCreatedId = "323123";
+
+  new CreateIngredient(repository).invoke({
+    id: ingredientCreatedId,
     title: "dsadsa",
     unit: UnitMeasure.LT,
   });
 
   return {
     repository,
-    ingredientCreated,
+    ingredientCreatedId,
   };
 };
 
 describe("UpdateIngredient", () => {
   test("Should update a ingredient already inserted", () => {
-    const { repository, ingredientCreated } = makeSut();
+    const { repository, ingredientCreatedId } = makeSut();
 
     const sut = new UpdateIngredient(repository);
 
-    sut.invoke(
-      {
+    sut.invoke({
+      attributes: {
         title: "New Title",
       },
-      ingredientCreated?.id
-    );
+      id: ingredientCreatedId,
+    });
 
     const ingredientAtRepository = repository.ingredients.find(
-      (item) => item.id === ingredientCreated.id
+      (item) => item.id === ingredientCreatedId
     );
 
     expect(ingredientAtRepository?.title).toBe("New Title");

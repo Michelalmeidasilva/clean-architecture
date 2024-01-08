@@ -1,17 +1,18 @@
-import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
-import { Ingredient } from "../../entity/ingredients/Ingredient";
+import { DeleteIngredientRepository } from "@core/repository/ingredients/DeleteIngredientRepository";
+
+export type DeleteIngredientParams = {
+  id: string;
+};
+export type DeleteIngredientResult = Promise<boolean>;
 
 export class DeleteIngredient {
-  constructor(private ingredientRepository: IngredientsRepository) {}
+  constructor(private ingredientRepository: DeleteIngredientRepository) {}
 
-  invoke(ingredient: Ingredient): Ingredient | null {
-    if (ingredient) {
-      const deletedIngredient =
-        this.ingredientRepository.deleteIngredient(ingredient);
+  async invoke(params: DeleteIngredientParams): DeleteIngredientResult {
+    const deletedIngredient = await this.ingredientRepository.deleteIngredient(
+      params
+    );
 
-      return deletedIngredient;
-    }
-
-    return null;
+    return deletedIngredient !== null;
   }
 }

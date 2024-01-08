@@ -3,7 +3,7 @@ import { Collection } from "mongodb";
 import { MongoHelper } from "../mongo-helper";
 
 import { Ingredient, IngredientsPartial } from "@core/entity";
-import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
+import { IngredientsRepository } from "@core/repository/ingredients/IngredientRepository";
 
 export default class IngredientsRepositoryMongoDb
   implements IngredientsRepository

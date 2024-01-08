@@ -1,20 +1,23 @@
-import { IngredientsRepository } from "@core/repository/ingredients/ingredient";
+import { UpdateIngredientRepository } from "@core/repository/ingredients/UpdateIngredientRepository";
 import {
   Ingredient,
   IngredientsPartial,
 } from "../../entity/ingredients/Ingredient";
 
-export class UpdateIngredient {
-  constructor(private ingredientRepository: IngredientsRepository) {}
+export type UpdateIngredientParams = {
+  attributes: Omit<IngredientsPartial, "id">;
+  id: string;
+};
+export type UpdateIngredientResult = Promise<Ingredient | null>;
 
-  invoke(
-    attributes: Omit<IngredientsPartial, "id">,
-    id: string
-  ): Ingredient | undefined {
-    const updatedIngredient = this.ingredientRepository.updateIngredient(
+export class UpdateIngredient {
+  constructor(private ingredientRepository: UpdateIngredientRepository) {}
+
+  invoke({ attributes, id }: UpdateIngredientParams): UpdateIngredientResult {
+    const updatedIngredient = this.ingredientRepository.updateIngredient({
       attributes,
-      id
-    );
+      id,
+    });
 
     return updatedIngredient;
   }
