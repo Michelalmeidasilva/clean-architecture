@@ -1,8 +1,9 @@
+import env from "@main/config/env";
 import { MongoClient, Collection, ObjectId } from "mongodb";
 
 type MongoDriverType = {
   client: null | MongoClient;
-  dbName: "galileu";
+  dbName: string;
   uri: null | string;
   connect: (uri: string) => Promise<void>;
   disconnect: () => Promise<void>;
@@ -14,7 +15,7 @@ type MongoDriverType = {
 export const MongoHelper: MongoDriverType = {
   client: null,
   uri: null,
-  dbName: "galileu",
+  dbName: env.mongoDatabase,
 
   async connect(uri: string): Promise<void> {
     this.uri = uri;

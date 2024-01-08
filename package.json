@@ -3,8 +3,8 @@
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun --watch src/index.ts",
-    "test:watch": "bun test --watch",
+    "dev": "NODE_ENV=development bun --watch src/index.ts",
+    "test:watch": "NODE_ENV=development bun test --watch",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {

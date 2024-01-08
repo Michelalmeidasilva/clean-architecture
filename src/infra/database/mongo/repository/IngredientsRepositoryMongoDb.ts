@@ -16,16 +16,13 @@ export default class IngredientsRepositoryMongoDb
     return MongoHelper.getCollection("ingredients");
   }
 
-  // async addIngredient(params: Ingredient): CreateIngredientsResult {}
-  // async deleteIngredient(params: DeleteIngredientParams) {}
-  // async updateIngredient(params: UpdateIngredientParams) {}
   async getIngredients(
     params?: SearchIngredientsParams
   ): SearchIngredientsResult {
     const collection = await IngredientsRepositoryMongoDb.getCollection();
     const ingredientsDocument = await collection?.find().toArray();
 
-    console.log(ingredientsDocument);
+    console.log({ ingredientsDocument });
 
     if (params) {
       return [];
