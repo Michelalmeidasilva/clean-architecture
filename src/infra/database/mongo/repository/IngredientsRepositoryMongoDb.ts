@@ -34,7 +34,7 @@ export default class IngredientsRepositoryMongoDb
 
   async addIngredient(
     params: CreateIngredientsParams
-  ): Promise<CreateIngredientsResult> {
+  ): CreateIngredientsResult {
     const collection = IngredientsRepositoryMongoDb.getCollection();
 
     if (params && collection) {
