@@ -1,12 +1,12 @@
 import env from "@main/config/env";
-import { MongoClient, Collection, ObjectId } from "mongodb";
+import { MongoClient, Collection, ObjectId, Document } from "mongodb";
 
 type MongoDriverType = {
   client: null | MongoClient;
   dbName: string;
   connect: (uri: string) => Promise<void>;
   disconnect: () => Promise<void>;
-  getCollection: (name: string) => Collection | null;
+  getCollection: <T extends Document>(name: string) => Collection<T> | null;
   mapCollection: (collection: Record<string | number, unknown>[]) => unknown[];
   map: (data: Record<string | number, unknown>) => unknown;
 };
@@ -14,8 +14,8 @@ type MongoDriverType = {
 export const MongoHelper: MongoDriverType = {
   client: new MongoClient(env.mongoUrl, {
     auth: {
-      password: "root",
-      username: "password123",
+      password: env.mongo_password,
+      username: env.mongo_username,
     },
   }),
   dbName: env.mongoDatabase,
@@ -29,15 +29,12 @@ export const MongoHelper: MongoDriverType = {
     this.client = null;
   },
 
-  async getCollection(name: string): Collection | null {
+  getCollection<T extends Document>(name: string): Collection<T> | null {
     const database = this?.client?.db(this.dbName);
 
-    console.log({ database });
-    if (database) {
-      return database.collection(name);
-    }
+    const collection = database?.collection<T>(name) ?? null;
 
-    return null;
+    return collection;
   },
 
   map: (data: Record<string | number, unknown>): unknown => {

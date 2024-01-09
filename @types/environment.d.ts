@@ -5,6 +5,8 @@ export declare global {
       MONGODB_CONNECTION_URL: string;
       MONGODB_DATABASE_PRODUCTION: string;
       MONGODB_DATABASE_STAGE: string;
+      MONGODB_USERNAME: string;
+      MONGODB_PASSWORD: string;
     }
   }
 }

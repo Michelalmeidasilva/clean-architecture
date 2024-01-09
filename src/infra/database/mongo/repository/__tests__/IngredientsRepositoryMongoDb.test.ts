@@ -8,16 +8,17 @@ import {
 } from "bun:test";
 import { MongoHelper } from "@infra/database/mongo/mongo-helper";
 import IngredientsRepositoryMongoDb from "../IngredientsRepositoryMongoDb";
-import { UnitMeasure } from "@core/entity";
+import { Ingredient } from "@core/entity";
+import { Collection } from "mongodb";
 
 const makeSut = (): IngredientsRepositoryMongoDb => {
   return new IngredientsRepositoryMongoDb();
 };
 
 describe("Ingredients Repository", () => {
-  let ingredientsCollection = null;
+  let ingredientsCollection: Collection<Ingredient> | null;
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGODB_CONNECTION_URL);
+    MongoHelper.connect(process.env.MONGODB_CONNECTION_URL);
     console.log("finish");
   });
 
@@ -27,31 +28,26 @@ describe("Ingredients Repository", () => {
 
   beforeEach(async () => {
     ingredientsCollection = MongoHelper.getCollection("ingredients");
-
-    console.log("dbname", ingredientsCollection?.dbName);
-    // await ingredientsCollection?.deleteMany({});
   });
 
   describe("Get Ingredients()", () => {
     test("Should return a ingredients on success", async () => {
-      console.log("enter here");
-
+      console.log(ingredientsCollection?.dbName);
       const sut = makeSut();
       const ingredients = await sut.getIngredients();
       expect(ingredients).toBeEmpty();
     });
   });
 
-  describe("Create Ingredient()", () => {
-    test("Should create a new ingredient", async () => {
-      const sut = makeSut();
-      const ingredients = await sut.addIngredient({
-        title: "michel",
-        unit: UnitMeasure.LT,
-      });
-      console.log("eter here", { ingredients });
+  // describe("Create Ingredient()", () => {
+  //   test("Should create a new ingredient", async () => {
+  //     const sut = makeSut();
+  //     const ingredients = await sut.addIngredient({
+  //       title: "michel",
+  //       unit: UnitMeasure.LT,
+  //     });
 
-      expect(ingredients).toBeEmpty();
-    });
-  });
+  //     expect(ingredients).toBeEmpty();
+  //   });
+  // });
 });

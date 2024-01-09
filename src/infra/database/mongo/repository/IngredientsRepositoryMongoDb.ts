@@ -2,7 +2,6 @@ import { Collection } from "mongodb";
 
 import { MongoHelper } from "../mongo-helper";
 
-// import { Ingredient, IngredientsPartial } from "@core/entity";
 import {
   CreateIngredientsParams,
   CreateIngredientsResult,
@@ -10,41 +9,33 @@ import {
   SearchIngredientsResult,
 } from "@core/usecases/ingredients";
 import { SearchIngredientRepository } from "@core/repository/ingredients/SearchIngredientRepository";
+import { Ingredient } from "@core/entity";
 
 export default class IngredientsRepositoryMongoDb
   implements SearchIngredientRepository
 {
-  static async getCollection(): Promise<Collection | null> {
-    return MongoHelper.getCollection("ingredients");
+  static getCollection(): Collection<Ingredient> | null {
+    return MongoHelper.getCollection<Ingredient>("ingredients");
   }
-
-  constructor() {}
 
   async getIngredients(
     params?: SearchIngredientsParams
   ): SearchIngredientsResult {
-    console.log("enter here");
+    const collection = IngredientsRepositoryMongoDb.getCollection();
 
-    const collection = await IngredientsRepositoryMongoDb.getCollection();
-
-    console.log({ collection });
-    const ingredientsDocument = await collection?.find().toArray();
-
-    console.log({ ingredientsDocument });
+    const ingredients = await collection?.find()?.toArray();
 
     if (params) {
-      return [];
-      // return ingredientsDocument;
+      return ingredients as Ingredient[];
     }
 
-    return [];
-    // return ingredientsDocument;
+    return ingredients as Ingredient[];
   }
 
   async addIngredient(
     params: CreateIngredientsParams
   ): Promise<CreateIngredientsResult> {
-    const collection = await IngredientsRepositoryMongoDb.getCollection();
+    const collection = IngredientsRepositoryMongoDb.getCollection();
 
     console.log({ collection });
 
