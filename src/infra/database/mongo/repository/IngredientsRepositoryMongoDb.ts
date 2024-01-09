@@ -37,12 +37,12 @@ export default class IngredientsRepositoryMongoDb
   ): Promise<CreateIngredientsResult> {
     const collection = IngredientsRepositoryMongoDb.getCollection();
 
-    console.log({ collection });
-
     if (params && collection) {
-      const result = await collection.insertOne({ params });
+      const result = await collection.insertOne({
+        title: params.title,
+        unit: params.unit,
+      });
 
-      console.log({ result });
       return result.acknowledged;
     }
 
