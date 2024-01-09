@@ -6,34 +6,36 @@ import {
   test,
   expect,
 } from "bun:test";
-import { MongoHelper } from "../../mongo-helper";
-import { Collection } from "mongodb";
+import { MongoHelper } from "@infra/database/mongo/mongo-helper";
 import IngredientsRepositoryMongoDb from "../IngredientsRepositoryMongoDb";
+import { UnitMeasure } from "@core/entity";
 
 const makeSut = (): IngredientsRepositoryMongoDb => {
   return new IngredientsRepositoryMongoDb();
 };
 
-let ingredientsCollection: Collection | null;
-
 describe("Ingredients Repository", () => {
+  let ingredientsCollection = null;
   beforeAll(async () => {
-    MongoHelper.connect(process.env.MONGODB_CONNECTION_URL);
-
-    console.log(MongoHelper.client);
+    await MongoHelper.connect(process.env.MONGODB_CONNECTION_URL);
+    console.log("finish");
   });
 
   afterAll(async () => {
-    MongoHelper.disconnect();
+    await MongoHelper.disconnect();
   });
 
   beforeEach(async () => {
     ingredientsCollection = MongoHelper.getCollection("ingredients");
-    await ingredientsCollection?.deleteMany({});
+
+    console.log("dbname", ingredientsCollection?.dbName);
+    // await ingredientsCollection?.deleteMany({});
   });
 
   describe("Get Ingredients()", () => {
     test("Should return a ingredients on success", async () => {
+      console.log("enter here");
+
       const sut = makeSut();
       const ingredients = await sut.getIngredients();
       expect(ingredients).toBeEmpty();
@@ -43,7 +45,12 @@ describe("Ingredients Repository", () => {
   describe("Create Ingredient()", () => {
     test("Should create a new ingredient", async () => {
       const sut = makeSut();
-      const ingredients = await sut.getIngredients();
+      const ingredients = await sut.addIngredient({
+        title: "michel",
+        unit: UnitMeasure.LT,
+      });
+      console.log("eter here", { ingredients });
+
       expect(ingredients).toBeEmpty();
     });
   });

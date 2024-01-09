@@ -4,7 +4,6 @@ import { MongoClient, Collection, ObjectId } from "mongodb";
 type MongoDriverType = {
   client: null | MongoClient;
   dbName: string;
-  uri: null | string;
   connect: (uri: string) => Promise<void>;
   disconnect: () => Promise<void>;
   getCollection: (name: string) => Collection | null;
@@ -13,13 +12,16 @@ type MongoDriverType = {
 };
 
 export const MongoHelper: MongoDriverType = {
-  client: null,
-  uri: null,
+  client: new MongoClient(env.mongoUrl, {
+    auth: {
+      password: "root",
+      username: "password123",
+    },
+  }),
   dbName: env.mongoDatabase,
 
-  async connect(uri: string): Promise<void> {
-    this.uri = uri;
-    this.client = await MongoClient.connect(uri);
+  async connect(): Promise<void> {
+    this.client?.connect();
   },
 
   async disconnect(): Promise<void> {
@@ -27,9 +29,12 @@ export const MongoHelper: MongoDriverType = {
     this.client = null;
   },
 
-  getCollection(name: string): Collection | null {
-    if (this?.client?.db()) {
-      return this.client.db(this.dbName).collection(name);
+  async getCollection(name: string): Collection | null {
+    const database = this?.client?.db(this.dbName);
+
+    console.log({ database });
+    if (database) {
+      return database.collection(name);
     }
 
     return null;

@@ -4,6 +4,8 @@ import { MongoHelper } from "../mongo-helper";
 
 // import { Ingredient, IngredientsPartial } from "@core/entity";
 import {
+  CreateIngredientsParams,
+  CreateIngredientsResult,
   SearchIngredientsParams,
   SearchIngredientsResult,
 } from "@core/usecases/ingredients";
@@ -16,10 +18,16 @@ export default class IngredientsRepositoryMongoDb
     return MongoHelper.getCollection("ingredients");
   }
 
+  constructor() {}
+
   async getIngredients(
     params?: SearchIngredientsParams
   ): SearchIngredientsResult {
+    console.log("enter here");
+
     const collection = await IngredientsRepositoryMongoDb.getCollection();
+
+    console.log({ collection });
     const ingredientsDocument = await collection?.find().toArray();
 
     console.log({ ingredientsDocument });
@@ -33,15 +41,22 @@ export default class IngredientsRepositoryMongoDb
     // return ingredientsDocument;
   }
 
-  // async addIngredient(ingredient: Ingredient): Promise<Ingredient> {
-  //   const collection = await IngredientsRepositoryMongoDb.getCollection();
+  async addIngredient(
+    params: CreateIngredientsParams
+  ): Promise<CreateIngredientsResult> {
+    const collection = await IngredientsRepositoryMongoDb.getCollection();
 
-  //   if (collection) {
-  //     const test = await collection.insertOne({ ingredient });
-  //   }
+    console.log({ collection });
 
-  //   return ingredient;
-  // }
+    if (params && collection) {
+      const result = await collection.insertOne({ params });
+
+      console.log({ result });
+      return result.acknowledged;
+    }
+
+    return false;
+  }
 
   // updateIngredient(attributes: IngredientsPartial, id: string) {
   //   return { ...attributes, id } as Ingredient;
